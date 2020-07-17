@@ -21,83 +21,6 @@
     // include 'insertparent.php';
    
     ?>
-    <?php
-include 'insertaddress.php';
-include 'insertapplicant.php';
-
-//father insert
-    if($fstatus=="fliving"){
-        $parentsObj = new ParentsView();
-        $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
-
-        $parentsObj2 = new ParentsView();
-        $paid = $parentsObj2->showParentAddressid($fmobile);
-
-        $parentsObj3 = new ParentsContr();
-        $parentsObj3->createParent($aid,$fname,$fnationality,$fcitizen,$fstatus,$fage,$foccupation,$fposition,$paid,'father',$gstatus);
-    }else{
-        $parentsObj = new ParentsView();
-        $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
-
-        // $parentsObj2 = new ParentsView();
-        // $paid=$parentsObj2->showParentAddressid("");
-
-        $parentsObj3 = new ParentsContr();
-        $parentsObj3->createParent($aid,$fname,$fnationality,$fcitizen,$fstatus,'','','',null,'father',$gstatus);
-    }
-
-//mother insert
-    if($mstatus=="mliving"){
-        $parentsObj = new ParentsView();
-        $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
-
-        $parentsObj2 = new ParentsView();
-        $paid = $parentsObj2->showParentAddressid($mmobile);
-
-        $parentsObj3 = new ParentsContr();
-        $parentsObj3->createParent($aid,$mname,$mnationality,$mcitizen,$mstatus,$mage,$moccupation,$mposition,$paid,'mother',$gstatus);
-    }else{
-        $parentsObj = new ParentsView();
-        $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
-
-        // $parentsObj2 = new ParentsView();
-        // $paid=$parentsObj2->showParentAddressid("");
-
-        $parentsObj3 = new ParentsContr();
-        $parentsObj3->createParent($aid,$mname,$mnationality,$mcitizen,$mstatus,'','','',null,'mother',$gstatus);
-    }
-
-//other insert    
-    if(isset($_POST['gstatus']))
-	    {
-    
-        if($_POST['gstatus']=="other")
-        {
-
-        if($guastatus=="gliving"){
-            $parentsObj = new ParentsView();
-            $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
-    
-            $parentsObj2 = new ParentsView();
-            $paid = $parentsObj2->showParentAddressid($gmobile);
-    
-            $parentsObj3 = new ParentsContr();
-            $parentsObj3->createParent($aid,$gname,$gnationality,$gcitizen,$guastatus,$gage,$goccupation,$gposition,$paid,'other guardian',$gstatus);
-        }else{
-            $parentsObj = new ParentsView();
-            $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
-    
-            // $parentsObj2 = new ParentsView();
-            // $paid=$parentsObj2->showParentAddressid("");
-    
-            $parentsObj3 = new ParentsContr();
-            $parentsObj3->createParent($aid,$gname,$gnationality,$gcitizen,$guastatus,'','','',null,'other guardian',$gstatus);
-
-        }
-    }
-    }
-    
-?>
 
 <?php
 $valid=true;
@@ -522,14 +445,14 @@ if(!empty($_POST))
         }
     }
     if(isset($_POST['goccupation'])){
-        $moccupation=$_POST['goccupation'];
+        $goccupation=$_POST['goccupation'];
         if(empty($goccupation))
         {
         $valid=false;
         }
     }
     if(isset($_POST['gposition'])){
-        $mposition=$_POST['gposition'];
+        $gposition=$_POST['gposition'];
         if(empty($gposition))
         {
         $valid=false;
@@ -550,7 +473,7 @@ if(!empty($_POST))
         }
     }
     if(isset($_POST['gzipcode'])){
-        $mzipcode=$_POST['gzipcode'];
+        $gzipcode=$_POST['gzipcode'];
         if(empty($gzipcode))
         {
         $valid=false;
@@ -1097,7 +1020,7 @@ if(!empty($_POST))
             </div>
             <label class="control-label col-md-2" for="mcitizen">Citizenship<span class="help-inline">*</span></label>
             <div class="controls col-md-4">
-               <input name="mcitizen" type="text" id="mcitizen" class="form-control form-control-inline col-md-4"  >
+               <input name="mcitizen" type="text" id="mcitizen" class="form-control form-control-inline col-md-4" value="<?php echo !empty($mcitizen)?$mcitizen:'';?>" >
                <?php if (!empty($mcitizen_error)): ?>
                 <span class="help-inline"><?php echo $mcitizen_error;?></span>
                 <?php endif; ?>           
@@ -1122,7 +1045,7 @@ if(!empty($_POST))
     </div>
     <br>
     <div class="form-group">
-        <label class="control-label col-md-2" for="moccupation">Occuputation</label>
+    <label class="control-label col-md-2" for="moccupation">Occuputation</label>
         <div class="controls col-md-4">
                <input name="moccupation" type="text" id="moccupation" class="form-control form-control-inline col-md-4"  value="<?php echo !empty($moccupation)?$moccupation:'';?>" >
                             
@@ -1185,7 +1108,7 @@ if(!empty($_POST))
         </div>  
     </div>    <br>
     
-    <div class="container" >
+<div class="container" >
     <div class="row">
       <h4>Guardian's Information </h4>
     </div>    
@@ -1246,7 +1169,7 @@ if(!empty($_POST))
     </div>
     <br>
     <div class="form-group">
-        <label class="control-label col-md-2" for="goccupation">Occuputation</label>
+    <label class="control-label col-md-2" for="goccupation">Occuputation</label>
         <div class="controls col-md-4">
                <input name="goccupation" type="text" id="goccupation" class="form-control form-control-inline col-md-4" value="<?php echo !empty($goccupation)?$goccupation:'';?>" >
                             
@@ -1290,7 +1213,7 @@ if(!empty($_POST))
     <div class="form-group ">
         <label class="control-label col-md-2" for="gzipcode">Zip Code</label>
             <div class="controls col-md-4">
-               <input name="gzipcode" type="text" id="gzipcode" class="form-control form-control-inline col-md-4" value="<?php echo !empty($gzipcode)?$gzipcode:'';?>" >
+               <input name="gzipcode" type="text" id="gzipcode" class="form-control form-control-inline col-md-4"  >
                             
             </div>
             
@@ -1490,7 +1413,7 @@ $('input[name="mstatus"]').on('change',function()
          
      });
 
-     //to keep function of selected status for mother
+  //to keep function of selected status for mother
       <?php if (isset($_POST['mstatus']) && $_POST['mstatus'] == 'mdecese'){?> 
         $("#mage").attr("disabled",true);
          $("#moccupation").attr("disabled",true);
@@ -1542,7 +1465,7 @@ $('input[name="mstatus"]').on('change',function()
      <?php } ?>
 
 //guardian's decese
-     $('input[name="guastatus"]').on('change',function()
+$('input[name="guastatus"]').on('change',function()
      {
          if(this.value!="gdecese"){
             $("#gage").attr("disabled", false);
@@ -1555,15 +1478,16 @@ $('input[name="mstatus"]').on('change',function()
          $("#gzipcode").attr("disabled",false);
          $("#gtelephone").attr("disabled",false);
          $("#gmobile").attr("disabled",false);
-         
+
          $("#gstreet").attr("readonly",false);
          $("#gtownship").attr("readonly",false);
          $("#gcity").attr("readonly",false);
          $("#gzipcode").attr("readonly",false);
 
-            // $("#fageErrordiv").show();
-            // $("#fmobileErrordiv").show();
+            // $("#mageErrordiv").show();
+            // $("#mmobileErrordiv").show();
 
+         
          }
          else{
             $("#gage").attr("disabled",true);
@@ -1588,14 +1512,14 @@ $('input[name="mstatus"]').on('change',function()
          $('#gtelephone').val("");
          $('#gmobile').val("");
 
-            // $("#fageErrordiv").hide();
-            // $("#fmobileErrordiv").hide();
+            // $("#mageErrordiv").hide();
+            // $("#mmobileErrordiv").hide();
          }
          
      });
 
-     //to keep function of selected status for guardian
-      <?php if (isset($_POST['guastatus']) && $_POST['guastatus'] == 'gdecese'){?> 
+  //to keep function of selected status for guardian
+<?php if (isset($_POST['guastatus']) && $_POST['guastatus'] == 'gdecese'){?> 
         $("#gage").attr("disabled",true);
          $("#goccupation").attr("disabled",true);
          $("#gposition").attr("disabled",true);
@@ -1610,7 +1534,7 @@ $('input[name="mstatus"]').on('change',function()
          $('#gage').val("");
          $('#goccupation').val("");
          $('#gposition').val("");
-         $('#gaddress').val("");
+         $('#gaddress').prop("checked", false);
          $('#gstreet').val("");
          $('#gtownship').val("");
          $('#gcity').val("");
@@ -1618,11 +1542,12 @@ $('input[name="mstatus"]').on('change',function()
          $('#gtelephone').val("");
          $('#gmobile').val("");
 
-        // $("#fageErrordiv").hide();
-        // $("#fmobileErrordiv").hide();
+            // $("#mageErrordiv").hide();
+            // $("#mmobileErrordiv").hide();
+        
          
       <?php }else{ ?>
-        $("#gage").prop("disabled", false);
+        $("#gage").attr("disabled", false);
             $("#goccupation").attr("disabled",false);
          $("#gposition").attr("disabled",false);
          $("#gaddress").attr("disabled",false);
@@ -1633,14 +1558,14 @@ $('input[name="mstatus"]').on('change',function()
          $("#gtelephone").attr("disabled",false);
          $("#gmobile").attr("disabled",false);
 
+         
          $("#gstreet").attr("readonly",false);
          $("#gtownship").attr("readonly",false);
          $("#gcity").attr("readonly",false);
          $("#gzipcode").attr("readonly",false);
 
-
-            // $("#fageErrordiv").show();
-            // $("#fmobileErrordiv").show();
+            // $("#mageErrordiv").show();
+            // $("#mmobileErrordiv").show();
         
      <?php } ?>
 
@@ -1734,8 +1659,8 @@ $('input[name="mstatus"]').on('change',function()
         <?php }?>
 
 
-     //same as applicant for guardian
-     $("#gaddress").change(function(){
+//same as applicant for guardian
+$("#gaddress").change(function(){
          var st=this.checked;
          if(st){
             
@@ -1777,6 +1702,7 @@ $('input[name="mstatus"]').on('change',function()
         $("#gcity").attr('readonly', false);
         $("#gzipcode").attr('readonly', false);
         <?php }?>
+
 
     });
 </script>
@@ -1852,7 +1778,84 @@ $.ajax({
 
 </script>
    
+<?php
+if($valid){
+include 'insertaddress.php';
+include 'insertapplicant.php';
 
+//father insert
+    if($fstatus=="fliving"){
+        $parentsObj = new ParentsView();
+        $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
+
+        $parentsObj2 = new ParentsView();
+        $paid = $parentsObj2->showParentAddressid($fmobile);
+
+        $parentsObj3 = new ParentsContr();
+        $parentsObj3->createParent($aid,$fname,$fnationality,$fcitizen,$fstatus,$fage,$foccupation,$fposition,$paid,'father',$gstatus);
+    }else{
+        $parentsObj = new ParentsView();
+        $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
+
+        // $parentsObj2 = new ParentsView();
+        // $paid=$parentsObj2->showParentAddressid("");
+
+        $parentsObj3 = new ParentsContr();
+        $parentsObj3->createParent($aid,$fname,$fnationality,$fcitizen,$fstatus,'','','',null,'father',$gstatus);
+    }
+
+//mother insert
+    if($mstatus=="mliving"){
+        $parentsObj = new ParentsView();
+        $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
+
+        $parentsObj2 = new ParentsView();
+        $paid = $parentsObj2->showParentAddressid($mmobile);
+
+        $parentsObj3 = new ParentsContr();
+        $parentsObj3->createParent($aid,$mname,$mnationality,$mcitizen,$mstatus,$mage,$moccupation,$mposition,$paid,'mother',$gstatus);
+    }else{
+        $parentsObj = new ParentsView();
+        $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
+
+        // $parentsObj2 = new ParentsView();
+        // $paid=$parentsObj2->showParentAddressid("");
+
+        $parentsObj3 = new ParentsContr();
+        $parentsObj3->createParent($aid,$mname,$mnationality,$mcitizen,$mstatus,'','','',null,'mother',$gstatus);
+    }
+
+//other insert    
+    if(isset($_POST['gstatus']))
+	    {
+    
+        if($_POST['gstatus']=="other")
+        {
+
+        if($guastatus=="gliving"){
+            $parentsObj = new ParentsView();
+            $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
+    
+            $parentsObj2 = new ParentsView();
+            $paid = $parentsObj2->showParentAddressid($gmobile);
+    
+            $parentsObj3 = new ParentsContr();
+            $parentsObj3->createParent($aid,$gname,$gnationality,$gcitizen,$guastatus,$gage,$goccupation,$gposition,$paid,'other guardian',$gstatus);
+        }else{
+            $parentsObj = new ParentsView();
+            $aid = $parentsObj->showApplicantid($email,$mobile,$facebook);
+    
+            // $parentsObj2 = new ParentsView();
+            // $paid=$parentsObj2->showParentAddressid("");
+    
+            $parentsObj3 = new ParentsContr();
+            $parentsObj3->createParent($aid,$gname,$gnationality,$gcitizen,$guastatus,'','','',null,'other guardian',$gstatus);
+
+        }
+    }
+    }
+} 
+?>
 
 </body>
 </html>
